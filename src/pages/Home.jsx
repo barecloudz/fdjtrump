@@ -46,13 +46,8 @@ export default function Home({ products }) {
         <SearchBar products={products} placeholder="Search for products..." />
       </div>
 
-      {/* Greeting */}
-      <div className="px-4 pt-6 pb-4 bg-white">
-        <h1 className="text-3xl font-bold text-gray-900">Hello, Romina!</h1>
-      </div>
-
       {/* Announcement */}
-      <div className="px-4 pb-6 bg-white">
+      <div className="px-4 py-6 bg-white">
         <div className="bg-gray-50 rounded-2xl p-4 flex items-center justify-between">
           <div>
             <h3 className="font-bold text-gray-900 mb-1">Announcement</h3>

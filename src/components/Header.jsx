@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
-import { Menu, Settings, Bell } from 'lucide-react'
+import { LogIn } from 'lucide-react'
 
 export default function Header() {
+  // TODO: Replace with actual auth state when authentication is implemented
+  const isLoggedIn = false
+
   return (
     <div className="bg-white sticky top-0 z-40 shadow-sm">
       <div className="px-4 py-4">
@@ -17,15 +20,23 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Right side icons */}
+          {/* Right side - Login/Profile */}
           <div className="flex items-center gap-2">
-            <button className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <Bell className="w-5 h-5 text-gray-600" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
-            <Link to="/profile" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <Settings className="w-5 h-5 text-gray-600" />
-            </Link>
+            {!isLoggedIn ? (
+              <Link
+                to="/onboarding"
+                className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-pink-500 text-white px-4 py-2 rounded-full font-medium text-sm hover:shadow-lg transition-shadow"
+              >
+                <LogIn className="w-4 h-4" />
+                Login
+              </Link>
+            ) : (
+              <Link to="/profile" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-pink-400 flex items-center justify-center">
+                  <span className="text-sm font-bold text-white">U</span>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </div>

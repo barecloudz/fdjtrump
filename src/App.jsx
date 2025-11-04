@@ -5,8 +5,10 @@ import FlashSale from './pages/FlashSale'
 import Profile from './pages/Profile'
 import ProductDetail from './pages/ProductDetail'
 import AdminLogin from './pages/admin/AdminLogin'
-import AdminDashboard from './pages/admin/AdminDashboard'
-import AdminProducts from './pages/admin/AdminProducts'
+import AdminDashboardNew from './pages/admin/AdminDashboardNew'
+import AdminProductsNew from './pages/admin/AdminProductsNew'
+import AdminOrders from './pages/admin/AdminOrders'
+import AdminSettings from './pages/admin/AdminSettings'
 import BottomNav from './components/BottomNav'
 import MobileLayout from './components/MobileLayout'
 import { useState, useEffect } from 'react'
@@ -35,11 +37,19 @@ function AppContent({ isAdmin, setIsAdmin, products, refreshProducts }) {
           <Route path="/admin" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
           <Route
             path="/admin/dashboard"
-            element={isAdmin ? <AdminDashboard products={products} /> : <Navigate to="/admin" />}
+            element={isAdmin ? <AdminDashboardNew products={products} /> : <Navigate to="/admin" />}
           />
           <Route
             path="/admin/products"
-            element={isAdmin ? <AdminProducts products={products} refreshProducts={refreshProducts} /> : <Navigate to="/admin" />}
+            element={isAdmin ? <AdminProductsNew products={products} refreshProducts={refreshProducts} /> : <Navigate to="/admin" />}
+          />
+          <Route
+            path="/admin/orders"
+            element={isAdmin ? <AdminOrders /> : <Navigate to="/admin" />}
+          />
+          <Route
+            path="/admin/settings"
+            element={isAdmin ? <AdminSettings /> : <Navigate to="/admin" />}
           />
         </Routes>
       )}

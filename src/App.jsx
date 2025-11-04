@@ -24,6 +24,7 @@ import MobileLayout from './components/MobileLayout'
 import { useState, useEffect } from 'react'
 import { supabase } from './lib/supabase'
 import { CartProvider } from './contexts/CartContext'
+import { AuthProvider } from './contexts/AuthContext'
 
 function AppContent({ isAdmin, setIsAdmin, products, refreshProducts }) {
   const location = useLocation()
@@ -119,18 +120,20 @@ function App() {
   }
 
   return (
-    <CartProvider>
-      <BrowserRouter>
-        <div className="min-h-screen bg-gray-100">
-          <AppContent
-            isAdmin={isAdmin}
-            setIsAdmin={setIsAdmin}
-            products={products}
-            refreshProducts={refreshProducts}
-          />
-        </div>
-      </BrowserRouter>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <div className="min-h-screen bg-gray-100">
+            <AppContent
+              isAdmin={isAdmin}
+              setIsAdmin={setIsAdmin}
+              products={products}
+              refreshProducts={refreshProducts}
+            />
+          </div>
+        </BrowserRouter>
+      </CartProvider>
+    </AuthProvider>
   )
 }
 

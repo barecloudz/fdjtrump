@@ -1,9 +1,17 @@
 import { Link } from 'react-router-dom'
 import { LogIn } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Header() {
-  // TODO: Replace with actual auth state when authentication is implemented
-  const isLoggedIn = false
+  const { user } = useAuth()
+  const isLoggedIn = !!user
+
+  // Get user's initials for avatar
+  const getInitials = () => {
+    if (!user?.user_metadata?.full_name) return 'U'
+    const names = user.user_metadata.full_name.split(' ')
+    return names.map(n => n[0]).join('').slice(0, 2).toUpperCase()
+  }
 
   return (
     <div className="bg-white sticky top-0 z-40 shadow-sm">
@@ -32,8 +40,8 @@ export default function Header() {
               </Link>
             ) : (
               <Link to="/profile" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-pink-400 flex items-center justify-center">
-                  <span className="text-sm font-bold text-white">U</span>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-pink-400 flex items-center justify-center shadow-md">
+                  <span className="text-sm font-bold text-white">{getInitials()}</span>
                 </div>
               </Link>
             )}

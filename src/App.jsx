@@ -5,7 +5,7 @@ import FlashSale from './pages/FlashSale'
 import Profile from './pages/Profile'
 import ProductDetail from './pages/ProductDetail'
 import AdminLogin from './pages/admin/AdminLogin'
-import AdminDashboardNew from './pages/admin/AdminDashboardNew'
+import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminProductsNew from './pages/admin/AdminProductsNew'
 import AdminOrders from './pages/admin/AdminOrders'
 import AdminSettings from './pages/admin/AdminSettings'
@@ -37,7 +37,7 @@ function AppContent({ isAdmin, setIsAdmin, products, refreshProducts }) {
           <Route path="/admin" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
           <Route
             path="/admin/dashboard"
-            element={isAdmin ? <AdminDashboardNew products={products} /> : <Navigate to="/admin" />}
+            element={isAdmin ? <AdminDashboard products={products} /> : <Navigate to="/admin" />}
           />
           <Route
             path="/admin/products"

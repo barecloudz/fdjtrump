@@ -11,8 +11,8 @@ export default function Home({ products }) {
       <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6">
         <div className="flex items-center justify-between mb-2">
           <div>
-            <h1 className="text-2xl font-bold">Hello!</h1>
-            <p className="text-blue-100">Welcome to Fuck DJ Trump Shop</p>
+            <h1 className="text-2xl font-bold">Fuck DJ Trump Shop</h1>
+            <p className="text-blue-100">Welcome! Browse our collection</p>
           </div>
           <ShoppingBag className="w-8 h-8 text-white/80" />
         </div>

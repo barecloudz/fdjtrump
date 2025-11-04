@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import ProductCard from '../components/ProductCard'
 import SearchBar from '../components/SearchBar'
+import Header from '../components/Header'
 import { ChevronRight, ShoppingBag, Settings, Menu, ArrowRight, Play, Clock } from 'lucide-react'
 
 export default function Home({ products }) {
@@ -37,31 +38,8 @@ export default function Home({ products }) {
 
   return (
     <div className="pb-20 bg-gray-50 min-h-screen">
-      {/* Header with profile */}
-      <div className="bg-white p-4 sticky top-0 z-40 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center overflow-hidden">
-              <span className="text-2xl">👨</span>
-            </div>
-            <button className="bg-blue-600 text-white px-6 py-2.5 rounded-full font-medium text-sm shadow-md">
-              My Activity
-            </button>
-          </div>
-          <div className="flex items-center gap-3">
-            <button className="relative p-2">
-              <Menu className="w-5 h-5 text-blue-600" />
-            </button>
-            <button className="relative p-2">
-              <Menu className="w-5 h-5 text-blue-600 rotate-90" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-blue-600 rounded-full"></span>
-            </button>
-            <button className="p-2">
-              <Settings className="w-5 h-5 text-blue-600" />
-            </button>
-          </div>
-        </div>
-      </div>
+      {/* Header with logo */}
+      <Header />
 
       {/* Search Bar */}
       <div className="px-4 py-3 bg-white border-b">

@@ -9,7 +9,7 @@ export default function BottomNav() {
   const isActive = (path) => location.pathname === path
 
   return (
-    <nav className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3 z-50 max-w-md mx-auto">
       <div className="flex justify-between items-center">
         <Link to="/" className="flex flex-col items-center">
           <Home

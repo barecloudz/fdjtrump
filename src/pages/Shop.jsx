@@ -1,5 +1,6 @@
 import ProductCard from '../components/ProductCard'
 import SearchBar from '../components/SearchBar'
+import Header from '../components/Header'
 import { ChevronRight } from 'lucide-react'
 
 export default function Shop({ products }) {
@@ -19,10 +20,10 @@ export default function Shop({ products }) {
   return (
     <div className="pb-20 bg-white min-h-screen">
       {/* Header */}
-      <div className="bg-white p-4 border-b sticky top-0 z-10">
-        <div className="flex items-center justify-between mb-3">
-          <h1 className="text-2xl font-bold">Shop</h1>
-        </div>
+      <Header />
+
+      {/* Search Bar */}
+      <div className="bg-white px-4 py-3 border-b sticky top-[72px] z-10">
         <SearchBar products={products} placeholder="Search for products..." />
       </div>
 

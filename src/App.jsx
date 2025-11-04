@@ -10,8 +10,9 @@ import AdminProducts from './pages/admin/AdminProducts'
 import BottomNav from './components/BottomNav'
 import MobileLayout from './components/MobileLayout'
 import { useState, useEffect } from 'react'
+import { supabase } from './lib/supabase'
 
-function AppContent({ isAdmin, setIsAdmin, products, saveProducts }) {
+function AppContent({ isAdmin, setIsAdmin, products, refreshProducts }) {
   const location = useLocation()
   const isAdminRoute = location.pathname.startsWith('/admin')
 
@@ -38,7 +39,7 @@ function AppContent({ isAdmin, setIsAdmin, products, saveProducts }) {
           />
           <Route
             path="/admin/products"
-            element={isAdmin ? <AdminProducts products={products} setProducts={saveProducts} /> : <Navigate to="/admin" />}
+            element={isAdmin ? <AdminProducts products={products} refreshProducts={refreshProducts} /> : <Navigate to="/admin" />}
           />
         </Routes>
       )}
@@ -49,18 +50,30 @@ function AppContent({ isAdmin, setIsAdmin, products, saveProducts }) {
 function App() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Load products from localStorage
-    const savedProducts = localStorage.getItem('products')
-    if (savedProducts) {
-      setProducts(JSON.parse(savedProducts))
-    }
+    loadProducts()
   }, [])
 
-  const saveProducts = (newProducts) => {
-    setProducts(newProducts)
-    localStorage.setItem('products', JSON.stringify(newProducts))
+  const loadProducts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      if (error) throw error
+      setProducts(data || [])
+    } catch (error) {
+      console.error('Error loading products:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const refreshProducts = () => {
+    loadProducts()
   }
 
   return (
@@ -70,7 +83,7 @@ function App() {
           isAdmin={isAdmin}
           setIsAdmin={setIsAdmin}
           products={products}
-          saveProducts={saveProducts}
+          refreshProducts={refreshProducts}
         />
       </div>
     </BrowserRouter>

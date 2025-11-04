@@ -25,3 +25,7 @@ dist-ssr
 
 # Netlify
 .netlify
+
+# Environment variables
+.env
+.env.local

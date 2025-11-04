@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Plus, Edit2, Trash2, ArrowLeft, X } from 'lucide-react'
+import { supabase } from '../../lib/supabase'
 
-export default function AdminProducts({ products, setProducts }) {
+export default function AdminProducts({ products, refreshProducts }) {
   const [showModal, setShowModal] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
   const [formData, setFormData] = useState({
@@ -15,37 +16,55 @@ export default function AdminProducts({ products, setProducts }) {
     popular: false,
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (editingProduct) {
-      // Update existing product
-      setProducts(products.map(p =>
-        p.id === editingProduct.id
-          ? { ...formData, id: editingProduct.id, price: parseFloat(formData.price) }
-          : p
-      ))
-    } else {
-      // Add new product
-      const newProduct = {
-        ...formData,
-        id: Date.now().toString(),
+    try {
+      const productData = {
+        name: formData.name,
         price: parseFloat(formData.price),
+        description: formData.description || null,
+        image: formData.image || null,
+        category: formData.category || null,
+        discount: parseInt(formData.discount) || 0,
+        popular: formData.popular || false,
       }
-      setProducts([...products, newProduct])
-    }
 
-    setShowModal(false)
-    setEditingProduct(null)
-    setFormData({
-      name: '',
-      price: '',
-      description: '',
-      image: '',
-      category: '',
-      discount: 0,
-      popular: false,
-    })
+      if (editingProduct) {
+        // Update existing product
+        const { error } = await supabase
+          .from('products')
+          .update(productData)
+          .eq('id', editingProduct.id)
+
+        if (error) throw error
+      } else {
+        // Add new product
+        const { error } = await supabase
+          .from('products')
+          .insert([productData])
+
+        if (error) throw error
+      }
+
+      // Refresh products list
+      refreshProducts()
+
+      setShowModal(false)
+      setEditingProduct(null)
+      setFormData({
+        name: '',
+        price: '',
+        description: '',
+        image: '',
+        category: '',
+        discount: 0,
+        popular: false,
+      })
+    } catch (error) {
+      console.error('Error saving product:', error)
+      alert('Error saving product: ' + error.message)
+    }
   }
 
   const handleEdit = (product) => {
@@ -54,9 +73,22 @@ export default function AdminProducts({ products, setProducts }) {
     setShowModal(true)
   }
 
-  const handleDelete = (productId) => {
+  const handleDelete = async (productId) => {
     if (confirm('Are you sure you want to delete this product?')) {
-      setProducts(products.filter(p => p.id !== productId))
+      try {
+        const { error } = await supabase
+          .from('products')
+          .delete()
+          .eq('id', productId)
+
+        if (error) throw error
+
+        // Refresh products list
+        refreshProducts()
+      } catch (error) {
+        console.error('Error deleting product:', error)
+        alert('Error deleting product: ' + error.message)
+      }
     }
   }
 

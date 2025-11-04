@@ -1,5 +1,6 @@
 import ProductCard from '../components/ProductCard'
-import { ChevronRight, Search } from 'lucide-react'
+import SearchBar from '../components/SearchBar'
+import { ChevronRight } from 'lucide-react'
 
 export default function Shop({ products }) {
   const categories = [
@@ -21,10 +22,8 @@ export default function Shop({ products }) {
       <div className="bg-white p-4 border-b sticky top-0 z-10">
         <div className="flex items-center justify-between mb-3">
           <h1 className="text-2xl font-bold">Shop</h1>
-          <button className="p-2 hover:bg-gray-100 rounded-full">
-            <Search className="w-6 h-6 text-gray-600" />
-          </button>
         </div>
+        <SearchBar products={products} placeholder="Search for products..." />
       </div>
 
       {/* Big Sale Banner */}

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, compact = false }) {
   const hasDiscount = product.discount && product.discount > 0
 
   return (
@@ -24,23 +24,23 @@ export default function ProductCard({ product }) {
             </div>
           )}
         </div>
-        <div className="p-3">
-          <h3 className="font-medium text-sm text-gray-900 line-clamp-2 mb-1">
-            {product.name}
+        <div className={compact ? 'p-2' : 'p-3'}>
+          <h3 className={`font-medium ${compact ? 'text-xs' : 'text-sm'} text-gray-900 line-clamp-2 mb-1`}>
+            {product.name || 'Lorem ipsum dolor sit amet consectetur'}
           </h3>
           <div className="flex items-center gap-2">
             {hasDiscount ? (
               <>
-                <span className="text-gray-400 text-sm line-through">
+                <span className={`text-gray-400 ${compact ? 'text-xs' : 'text-sm'} line-through`}>
                   ${product.price.toFixed(2)}
                 </span>
-                <span className="text-primary font-bold">
+                <span className={`text-gray-900 font-bold ${compact ? 'text-sm' : 'text-base'}`}>
                   ${(product.price * (1 - product.discount / 100)).toFixed(2)}
                 </span>
               </>
             ) : (
-              <span className="text-primary font-bold">
-                ${product.price.toFixed(2)}
+              <span className={`text-gray-900 font-bold ${compact ? 'text-sm' : 'text-base'}`}>
+                ${product.price ? product.price.toFixed(2) : '17.00'}
               </span>
             )}
           </div>

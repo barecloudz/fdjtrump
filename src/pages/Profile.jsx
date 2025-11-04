@@ -1,4 +1,5 @@
-import { User, Settings, Shield, ChevronRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { User, Settings, Shield, ChevronRight, Package } from 'lucide-react'
 
 export default function Profile() {
   return (
@@ -21,6 +22,17 @@ export default function Profile() {
 
       {/* Menu Items */}
       <div className="px-4 space-y-2">
+        <Link
+          to="/my-orders"
+          className="w-full flex items-center gap-3 p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors shadow-sm"
+        >
+          <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+            <Package className="w-5 h-5 text-primary" />
+          </div>
+          <span className="flex-1 text-left font-medium">My Orders</span>
+          <ChevronRight className="w-5 h-5 text-gray-400" />
+        </Link>
+
         <button className="w-full flex items-center gap-3 p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors shadow-sm">
           <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
             <User className="w-5 h-5 text-primary" />

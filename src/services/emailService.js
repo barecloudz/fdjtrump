@@ -543,3 +543,82 @@ export async function sendOrderStatusUpdateEmail(order, items, previousStatus) {
     return { success: false, error }
   }
 }
+
+// Send donation confirmation email
+export async function sendDonationConfirmationEmail(donation) {
+  try {
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <style>${emailStyles}</style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>Thank You for Your Donation! ❤️</h1>
+          </div>
+          <div class="content">
+            <p>Dear ${donation.donor_name},</p>
+
+            <p>Thank you for your generous donation of <strong>$${donation.amount.toFixed(2)}</strong> to help immigrants today. Your compassion and generosity make a real difference in people's lives.</p>
+
+            <div class="order-number">
+              <strong>Donation ID: ${donation.id.slice(0, 8)}</strong><br>
+              <span style="color: #666; font-size: 14px;">Date: ${new Date(donation.created_at).toLocaleDateString()}</span>
+            </div>
+
+            ${donation.message ? `
+              <div style="background-color: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <strong>Your Message:</strong>
+                <p style="margin: 10px 0 0 0; font-style: italic; color: #666;">"${donation.message}"</p>
+              </div>
+            ` : ''}
+
+            <h3 style="color: #f97316; margin-top: 30px;">Where Your Donation Goes</h3>
+            <ul style="color: #666; line-height: 1.8;">
+              <li>Legal assistance and immigration services</li>
+              <li>Essential resources and support programs</li>
+              <li>Community integration and language services</li>
+              <li>Emergency assistance for families in need</li>
+            </ul>
+
+            <p style="margin-top: 30px;">Your contribution directly impacts lives and helps build stronger, more inclusive communities.</p>
+
+            <center style="margin: 30px 0;">
+              <a href="${SHOP_URL}" class="button">Visit Our Shop</a>
+            </center>
+
+            <p style="color: #666; font-size: 14px; margin-top: 30px;">
+              This email serves as your donation receipt. Please keep it for your records.
+            </p>
+          </div>
+          <div class="footer">
+            <p>© ${new Date().getFullYear()} ${SHOP_NAME}</p>
+            <p style="font-size: 12px; color: #999;">Thank you for making a difference!</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [donation.donor_email],
+      subject: `Thank You for Your Donation - ${donation.id.slice(0, 8)}`,
+      html,
+    })
+
+    if (error) {
+      console.error('Error sending donation confirmation email:', error)
+      return { success: false, error }
+    }
+
+    console.log('Donation confirmation email sent:', data)
+    return { success: true, data }
+  } catch (error) {
+    console.error('Error sending donation confirmation email:', error)
+    return { success: false, error }
+  }
+}

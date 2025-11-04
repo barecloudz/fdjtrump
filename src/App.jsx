@@ -9,6 +9,8 @@ import Checkout from './pages/Checkout'
 import OrderConfirmation from './pages/OrderConfirmation'
 import MyOrders from './pages/MyOrders'
 import SearchResults from './pages/SearchResults'
+import Donate from './pages/Donate'
+import DonationConfirmation from './pages/DonationConfirmation'
 import PasswordRecovery from './pages/auth/PasswordRecovery'
 import SetupNewPassword from './pages/auth/SetupNewPassword'
 import Onboarding from './pages/auth/Onboarding'
@@ -53,6 +55,8 @@ function AppContent({ isAdmin, setIsAdmin, products, refreshProducts }) {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
             <Route path="/my-orders" element={<><MyOrders /><BottomNav /></>} />
+            <Route path="/donate" element={<Donate />} />
+            <Route path="/donation-confirmation/:donationId" element={<DonationConfirmation />} />
             <Route path="/profile" element={<><Profile /><BottomNav /></>} />
             <Route path="/product/:id" element={<><ProductDetail products={products} /><BottomNav /></>} />
           </Routes>

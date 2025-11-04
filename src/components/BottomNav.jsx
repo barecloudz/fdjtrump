@@ -17,10 +17,10 @@ export default function BottomNav() {
             fill={isActive('/') ? 'currentColor' : 'none'}
           />
         </Link>
-        <Link to="/flash-sale" className="flex flex-col items-center">
+        <Link to="/donate" className="flex flex-col items-center">
           <Heart
-            className={`w-6 h-6 ${isActive('/flash-sale') ? 'text-primary' : 'text-gray-400'}`}
-            fill={isActive('/flash-sale') ? 'currentColor' : 'none'}
+            className={`w-6 h-6 ${isActive('/donate') ? 'text-pink-500' : 'text-gray-400'}`}
+            fill={isActive('/donate') ? 'currentColor' : 'none'}
           />
         </Link>
         <Link to="/shop" className="flex flex-col items-center">
